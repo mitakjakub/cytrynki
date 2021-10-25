@@ -1,0 +1,11 @@
+!sqlite_from_csv.sh
+!sql_plus_file.sh
+cytrynki.db
+bulk.txt
+*.txt
+*.csv
+build/old
+build/old/*
+build/flask_www/__*
+csv/*.csv
+run/*.run

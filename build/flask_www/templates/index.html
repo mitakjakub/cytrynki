@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block titre %}<img src="/static/fruit.png"> obecności:{% endblock %}
+
+{% block contenu %}
+
+<div class="card chart-container">
+
+  <canvas id="chart"></canvas>
+
+</div>
+<style>
+  .chart-container {
+    width: 80%;
+    height: 50%;
+    margin: auto;
+  }
+</style>
+
+<script>
+      const ctx = document.getElementById("chart").getContext('2d');
+      const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+                labels: [{% for contact in contact_list %}"{{contact.data}}", {% endfor %} ""],
+          datasets: [{
+            label: 'Liczba obecnych',
+            borderWidth: 1,
+            pointStyle: 'rectRot',
+            pointRadius: 5,
+            pointBorderColor: 'rgb(0, 0, 0)',
+            backgroundColor: 'rgba(161, 198, 247, 1)',
+            borderColor: 'rgb(47, 128, 237)',
+            data:  [{% for contact in contact_list %}"{{contact.ilosc}}", {% endfor %} "0"],
+          }]
+        },
+        options: {
+        responsive: true,
+        interaction: {
+            intersect: false,
+            axis: 'x'
+        },
+            radius: 5,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }]
+          }
+        },
+      });
+</script>
+<br><br>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                Dane w postaci tabelarycznej
+              </button>
+            </h5>
+          </div>
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+            <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Obecnych</th>
+            <th scope="col">Obecnych %</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contact_list %}
+        <tr>
+            <td>{{contact.data}}</td>
+            <td>{{contact.ilosc}}</td>
+            <td>{{contact.procent}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div></div></div>
+<br>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Dane w postaci tabelarycznej w ujęciu miesięcznym
+              </button>
+            </h5>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+            <table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Miesiąc</th>
+            <th scope="col">Max</th>
+            <th scope="col">Min</th>
+            <th scope="col">Średnio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for monthly in monthly %}
+        <tr>
+            <td>{{monthly.month}}</td>
+            <td>{{monthly.maximum}}</td>
+            <td>{{monthly.minimum}}</td>
+            <td>{{monthly.average}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div></div></div></div</div></div></div>
+<br><br>
+{% endblock %}

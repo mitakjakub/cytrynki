@@ -1,0 +1,35 @@
+version: '3.3'
+services:
+  cytrynki:
+    restart: unless-stopped
+    stop_grace_period: 15s
+    build:
+      context: .
+      dockerfile: Dockerfile
+      labels:
+        pl.mitak.description: "cytrynki"
+    container_name: cytrynki
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: "0.2"
+          memory: 100M
+        reservations:
+          memory: 50M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10M"
+        max-file: "10"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    image: cytrynki
+    ports:
+      - "127.0.0.1:15000:5000"
+    volumes:
+      - /home/storage/cytrynki/db:/cytrynkidb/
