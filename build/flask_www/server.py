@@ -40,6 +40,6 @@ def close_connection(exception):
 @app.route('/')
 #@auth.login_required
 def index():
-    contact_list=query_db("SELECT data, iif(ilosc > 0, ilosc, '') as ilosc, iif(((100.0 * ilosc)/31) > 0,  round(((100.0 * ilosc)/31), 2), '' ) as procent FROM cytrynki ORDER by data desc")
-    monthly=query_db("select strftime('%m', data) as month, min(ilosc) as minimum, max(ilosc) as maximum, round(avg(ilosc), 1) as average from cytrynki where ilosc > 0 group by strftime('%m',data)")
+    contact_list=query_db("SELECT data, iif(ilosc > 0, ilosc, '') as ilosc, iif(((100.0 * ilosc)/31) > 0,  round(((100.0 * ilosc)/ilosco), 2), '' ) as procent, iif(ilosco > 0, ilosco, '') as ilosco , iif(iloscz > 0, iloscz, '') as iloscz, iif(ilosc > 0, round((ilosc*1.0/iloscz),2), '') as dzieciperciocie FROM cytrynki ORDER by data desc")
+    monthly=query_db("select strftime('%m', data) as month, min(ilosc) as minimum, max(ilosc) as maximum, round(avg(ilosc), 1) as average, min(iloscz) as minimumo, max(iloscz) as maximumo, round(avg(iloscz), 1) as averageo from cytrynki where ilosc > 0 group by strftime('%m',data)")
     return render_template("index.html",contact_list=contact_list,monthly=monthly)

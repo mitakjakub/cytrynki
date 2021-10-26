@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titre %}<img src="/static/fruit.png"> obecności:{% endblock %}
+{% block titre %}Statystyka:{% endblock %}
 
 {% block contenu %}
 
@@ -24,23 +24,51 @@
         data: {
                 labels: [{% for contact in contact_list %}"{{contact.data}}", {% endfor %} ""],
           datasets: [{
-            label: 'Liczba obecnych',
+            label: 'Obecne',
             borderWidth: 1,
             pointStyle: 'rectRot',
             pointRadius: 5,
             pointBorderColor: 'rgb(0, 0, 0)',
-            backgroundColor: 'rgba(161, 198, 247, 1)',
             borderColor: 'rgb(47, 128, 237)',
             data:  [{% for contact in contact_list %}"{{contact.ilosc}}", {% endfor %} "0"],
-          }]
+            },
+            {
+            label: 'Zapisane',
+            borderWidth: 1,
+            pointStyle: 'rectRot',
+            pointRadius: 0,
+            pointBorderColor: 'rgb(0, 0, 0)',
+            borderColor: 'rgb(47, 128, 27)',
+                    data:  [{% for contact in contact_list %}"{{contact.ilosco}}", {% endfor %} "0"],},
+            {
+            label: 'Dzieci/ciocie',
+            borderWidth: 1,
+            pointStyle: 'rectRot',
+            pointRadius: 0,
+            pointBorderColor: 'rgb(0, 0, 0)',
+            borderColor: 'rgb(97, 98, 97)',
+                    data:  [{% for contact in contact_list %}"{{contact.dzieciperciocie}}", {% endfor %} "0"],},
+            {
+            label: 'Dzieci/ciocie referencja',
+            borderWidth: 1,
+            pointStyle: 'rectRot',
+            pointRadius: 0,
+            pointBorderColor: 'rgb(0, 0, 0)',
+            borderColor: 'rgb(122, 150, 150)',
+                    data:  [ {% for contact in contact_list %}"5", {% endfor %} "5"],}
+
+              ],
         },
         options: {
         responsive: true,
+        elements: {
+        line: {
+            tension: 0
+        }},
         interaction: {
             intersect: false,
             axis: 'x'
         },
-            radius: 5,
           scales: {
             yAxes: [{
               ticks: {
@@ -67,8 +95,11 @@
     <thead>
         <tr>
             <th scope="col">Data</th>
-            <th scope="col">Obecnych</th>
-            <th scope="col">Obecnych %</th>
+            <th scope="col">Obecne</th>
+            <th scope="col">Obecne/Zapisane %</th>
+            <th scope="col">Zapisane</th>
+            <th scope="col">Ciocie</th>
+            <th scope="col">Dzieci/Ciocie</th>
         </tr>
     </thead>
     <tbody>
@@ -77,6 +108,11 @@
             <td>{{contact.data}}</td>
             <td>{{contact.ilosc}}</td>
             <td>{{contact.procent}}</td>
+            <td>{{contact.ilosco}}</td>
+            <td>{{contact.iloscz}}</td>
+            <td>{{contact.dzieciperciocie}}</td>
+        </tr>
+        </tr>
         </tr>
         {% endfor %}
     </tbody>
@@ -98,9 +134,12 @@
     <thead>
         <tr>
             <th scope="col">Miesiąc</th>
-            <th scope="col">Max</th>
-            <th scope="col">Min</th>
-            <th scope="col">Średnio</th>
+            <th scope="col">Obecne Max</th>
+            <th scope="col">Obecne Min</th>
+            <th scope="col">Obecne Średnio</th>
+            <th scope="col">Ciocie Max</th>
+            <th scope="col">Ciocie Min</th>
+            <th scope="col">Ciocie Średnio</th>
         </tr>
     </thead>
     <tbody>
@@ -110,6 +149,9 @@
             <td>{{monthly.maximum}}</td>
             <td>{{monthly.minimum}}</td>
             <td>{{monthly.average}}</td>
+            <td>{{monthly.maximumo}}</td>
+            <td>{{monthly.minimumo}}</td>
+            <td>{{monthly.averageo}}</td>
         </tr>
         {% endfor %}
     </tbody>
