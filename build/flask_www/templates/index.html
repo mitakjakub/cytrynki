@@ -133,6 +133,7 @@
             <table class="table">
     <thead>
         <tr>
+            <th scope="col">Rok</th>
             <th scope="col">Miesiąc</th>
             <th scope="col">Obecne Max</th>
             <th scope="col">Obecne Min</th>
@@ -145,6 +146,7 @@
     <tbody>
         {% for monthly in monthly %}
         <tr>
+            <td>{{monthly.year}}</td>
             <td>{{monthly.month}}</td>
             <td>{{monthly.maximum}}</td>
             <td>{{monthly.minimum}}</td>
